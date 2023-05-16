@@ -48,6 +48,20 @@ export default function Home() {
             REGISTER A MEMORY
           </a>
         </div>
+
+        {/* Copyright */}
+        <div className="text-sm leading-relaxed text-gray-200">
+          Made with 💟 during{' '}
+          <a
+            target="_blank"
+            className="underline hover:text-gray-100"
+            href="https://rocketseat.com.br"
+            rel="noreferrer" // Avoid CORS
+          >
+            Rocketseat
+          </a>{' '}
+          NLW
+        </div>
       </div>
       {/* Grid Right Section */}
       <div className="flex flex-col bg-[url(../assets/bg-stars.svg)] bg-cover p-16">
