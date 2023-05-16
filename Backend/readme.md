@@ -7,3 +7,7 @@ Below are some instructions so you can run while developing or build the applica
 ## Commands
 This command will run the application for development cenario, any changes made on /backend will restart the app.
 > npm run dev
+
+This command will run eslint and fix the code on /backend using eslint conventions that were configured
+> npm run lint
+
