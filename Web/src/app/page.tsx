@@ -1,3 +1,5 @@
+import { User as UserIcon } from 'lucide-react'
+
 export default function Home() {
   return (
     <main className="grid min-h-screen grid-cols-2">
@@ -8,6 +10,21 @@ export default function Home() {
 
         {/* Stripe */}
         <div className="absolute bottom-0 right-2 top-0 w-2 bg-stripes" />
+
+        {/* User Sign In */}
+        <a
+          href=""
+          className="flex items-center gap-3 text-left transition-colors hover:text-gray-50"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400">
+            <UserIcon className="h-5 w-5 text-gray-500" />
+          </div>
+
+          <p className="max-w-[140px] text-sm leading-snug">
+            <span className="underline">Create your account</span> and keep your
+            memories safe!
+          </p>
+        </a>
       </div>
       {/* Grid Right Section */}
       <div className="flex flex-col bg-[url(../assets/bg-stars.svg)] bg-cover p-16">
