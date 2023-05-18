@@ -14,7 +14,17 @@ import Stripes from './src/assets/stripes.svg'
 import AppLogo from './src/assets/nlw-spacetime-logo.svg'
 import { styled } from 'nativewind'
 
+import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
+import { useEffect } from 'react'
+
 const StyleStripes = styled(Stripes)
+
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint:
+    'https://github.com/settings/connections/applications/ab14f86bc471c5d22e76',
+}
 
 export default function App() {
   const [hasLoadedFonts] = useFonts({
@@ -22,6 +32,39 @@ export default function App() {
     Roboto_700Bold,
     BaiJamjuree_700Bold,
   })
+
+  const [, response, signInWithGithub] = useAuthRequest(
+    {
+      clientId: 'ab14f86bc471c5d22e76',
+      scopes: ['identity'],
+      redirectUri: makeRedirectUri({
+        scheme: 'Spacetime',
+      }),
+    },
+    discovery,
+  )
+
+  /*
+  async function handleGithubOAuthCode(code: string) {
+    const response = await api.post('/register', {
+      code,
+    })
+
+    const { token } = response.data
+
+    await SecureStore.setItemAsync('token', token)
+
+    router.push('/memories')
+  }
+  */
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { code } = response.params
+
+      console.log(code)
+    }
+  }, [response])
 
   if (!hasLoadedFonts) {
     return null
@@ -51,6 +94,7 @@ export default function App() {
         <TouchableOpacity
           activeOpacity={0.7}
           className="rounded-full bg-green-500 px-5 py-2"
+          onPress={() => signInWithGithub()}
         >
           <Text className="font-alt text-sm uppercase text-black">
             REGISTER A MEMORY
