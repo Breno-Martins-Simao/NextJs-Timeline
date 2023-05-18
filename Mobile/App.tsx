@@ -16,6 +16,7 @@ import { styled } from 'nativewind'
 
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
 import { useEffect } from 'react'
+import { api } from './src/lib/api'
 
 const StyleStripes = styled(Stripes)
 
@@ -71,7 +72,14 @@ export default function App() {
     if (response?.type === 'success') {
       const { code } = response.params
 
-      console.log(code)
+      api
+        .post('/register', {
+          code,
+        })
+        .then((response) => {
+          const { token } = response.data
+          console.log(token)
+        })
     }
   }, [response])
 
