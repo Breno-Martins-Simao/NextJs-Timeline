@@ -59,6 +59,15 @@ export default function App() {
   */
 
   useEffect(() => {
+    /* 
+    console.log(
+      makeRedirectUri({
+        scheme: 'Spacetime',
+      }),
+    ) 
+    //Re Use the code above to debug using Expo, the output should be configured on Oauth application in Github dev settings
+    */
+
     if (response?.type === 'success') {
       const { code } = response.params
 
