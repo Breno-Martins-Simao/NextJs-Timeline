@@ -7,7 +7,7 @@ import {
   ScrollView,
   Image,
 } from 'react-native'
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 
 // Images & Icons
 import AppLogo from '../src/assets/nlw-spacetime-logo.svg'
@@ -16,11 +16,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 
+// Secure Store
+import * as SecureStore from 'expo-secure-store'
+import { api } from '../src/lib/api'
+
 export default function NewMemory() {
   const { bottom, top } = useSafeAreaInsets()
   const [isPublic, setIsPublic] = useState(false)
   const [content, setContent] = useState('')
   const [cover, setCover] = useState<string | null>(null)
+  const router = useRouter()
 
   async function openImagePicker() {
     try {
@@ -45,7 +50,45 @@ export default function NewMemory() {
     }
   }
 
-  function handleCreateMemory() {}
+  async function handleCreateMemory() {
+    const token = await SecureStore.getItemAsync('token')
+
+    let coverUrl = ''
+
+    if (cover) {
+      const uploadFormData = new FormData()
+
+      uploadFormData.append('file', {
+        uri: cover,
+        name: 'image.jpg',
+        type: 'image/jpg',
+      } as any)
+
+      const uploadResponse = await api.post('/upload', uploadFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      coverUrl = uploadResponse.data.fileUrl
+    }
+
+    await api.post(
+      '/memories',
+      {
+        content,
+        isPublic,
+        coverUrl,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+
+    router.push('/memories')
+  }
 
   return (
     <ScrollView
@@ -101,6 +144,7 @@ export default function NewMemory() {
           value={content}
           onChangeText={setContent}
           className="p-0 font-body text-lg text-gray-50"
+          textAlignVertical="top"
           placeholderTextColor={'#56565a'}
           placeholder="Feel free to add histories, facts, videos and infomations about the experience that should be saved in time forever "
         />
