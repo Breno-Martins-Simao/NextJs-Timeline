@@ -12,5 +12,10 @@ These three applications can be deployed at separate containers/server, but both
 # How should you use this repo?
 This repo represents all the SpaceTime Application ecossystem, so if you want to run the any of the **frontend plataform** you **MUST** also run the **Backend API**. You can check how to run each application through their readme.md in their respective folders.
 
+# Do you like it? Has any Suggestions? Feel fre to colaborate with me!
+Feel free to contact me by any way :) 
+- [Linkedin](https://www.linkedin.com/in/breno-martins-simao/)
+- [E-mail](mailto:breno_simao@outlook.com?subject=Hi)
+
 
 
